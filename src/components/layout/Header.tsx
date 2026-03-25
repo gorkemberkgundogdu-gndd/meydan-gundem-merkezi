@@ -1,6 +1,7 @@
 import { Search, User, Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
+import meydanLogo from "@/assets/meydan-logo.png";
 
 const navItems = [
   { label: "Gündem", path: "/" },
@@ -20,9 +21,8 @@ const Header = () => {
     <header className="sticky top-0 z-50 bg-card shadow-sm">
       <div className="flex flex-col w-full max-w-screen-2xl mx-auto px-4 md:px-6 py-3 md:py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 md:gap-3">
-            <div className="w-8 h-8 md:w-10 md:h-10 bg-secondary-container flex items-center justify-center font-extrabold text-secondary-foreground text-xl md:text-2xl tracking-tighter font-headline">M</div>
-            <h1 className="text-2xl md:text-3xl font-extrabold tracking-tighter text-primary font-headline uppercase">MEYDAN</h1>
+          <Link to="/" className="flex items-center">
+            <img src={meydanLogo} alt="MEYDAN" className="h-8 md:h-10 w-auto" />
           </Link>
 
           <nav className="hidden lg:flex items-center space-x-6 font-headline font-extrabold uppercase tracking-tight text-sm">

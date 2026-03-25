@@ -1,14 +1,14 @@
 import { Globe, MessageSquare, PlayCircle, Rss } from "lucide-react";
 import { Link } from "react-router-dom";
+import meydanLogo from "@/assets/meydan-logo.png";
 
 const Footer = () => {
   return (
     <footer className="bg-primary text-primary-foreground py-16">
       <div className="max-w-screen-2xl mx-auto px-6">
         <div className="flex flex-col items-center space-y-12 text-center">
-          <Link to="/" className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-primary-foreground flex items-center justify-center font-extrabold text-primary text-3xl italic font-headline">M</div>
-            <h2 className="text-4xl font-extrabold italic tracking-tighter uppercase font-headline">MEYDAN</h2>
+          <Link to="/" className="flex items-center">
+            <img src={meydanLogo} alt="MEYDAN" className="h-12 w-auto brightness-0 invert" />
           </Link>
           <p className="text-primary-foreground/70 font-medium text-lg max-w-xl">
             Gündemin merkezi, doğrunun sesi. Modern Türkiye'nin dijital haber meydanı.
