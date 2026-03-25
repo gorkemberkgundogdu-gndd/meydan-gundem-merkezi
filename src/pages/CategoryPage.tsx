@@ -46,33 +46,21 @@ const categories: Record<string, CategoryConfig> = {
       { headline: "Tarım sektöründe destek paketi açıklandı: Çiftçilere müjde", img: videoAgricultureImg, date: "23 Mart 2026", tag: "EKONOMİ" },
     ],
   },
-  savunma: {
-    title: "SAVUNMA",
-    description: "Milli savunma sanayii, TSK operasyonları ve güvenlik gelişmeleri.",
-    articles: [
-      { headline: "KAAN uçuş testlerinde yeni aşama: Milli motor için tarih verildi", img: defenseImg, date: "25 Mart 2026", tag: "SAVUNMA" },
-      { headline: "Türkiye–Körfez zirvesi: Savunma alanında 8 anlaşma imzalandı", img: heroSummitImg, date: "25 Mart 2026", tag: "SAVUNMA" },
-      { headline: "Bayraktar TB3 SİHA'lar TCG Anadolu'dan ilk kez havalandı", img: liveStudioImg, date: "25 Mart 2026", tag: "SAVUNMA" },
-      { headline: "Sınır ötesi operasyonda PKK'ya ağır darbe: 47 terörist etkisiz", img: videoCityImg, date: "24 Mart 2026", tag: "SAVUNMA" },
-      { headline: "ASELSAN'dan yeni ihracat anlaşması: 3 ülkeyle imza atıldı", img: videoFinanceImg, date: "24 Mart 2026", tag: "SAVUNMA" },
-      { headline: "Milli denizaltı projesi: REIS sınıfı 2027'de filoda", img: worldImg, date: "23 Mart 2026", tag: "SAVUNMA" },
-    ],
-  },
 };
 
-const DunyaPage = () => {
+const RSSCategoryPage = ({ feed, title, description, sourceLabel }: { feed: string; title: string; description: string; sourceLabel: string }) => {
   const [activeFilter, setActiveFilter] = useState("Tümü");
-  const { data: rssItems, isLoading, isError } = useRSSFeed("dunya");
+  const { data: rssItems, isLoading, isError } = useRSSFeed(feed);
 
   return (
     <Layout>
       <div className="max-w-screen-2xl mx-auto px-4 md:px-6 py-6 lg:py-10">
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-4">
-            <h1 className="text-4xl lg:text-5xl font-headline font-extrabold tracking-tighter uppercase text-primary">DÜNYA</h1>
+            <h1 className="text-4xl lg:text-5xl font-headline font-extrabold tracking-tighter uppercase text-primary">{title}</h1>
             <div className="h-1 flex-1 bg-primary/20" />
           </div>
-          <p className="text-on-surface-variant text-lg">Uluslararası gündem, küresel gelişmeler ve dış politika haberleri.</p>
+          <p className="text-on-surface-variant text-lg">{description}</p>
         </div>
 
         <div className="flex gap-2 mb-8 flex-wrap">
@@ -117,11 +105,11 @@ const DunyaPage = () => {
                     <img src={item.image} alt={item.title} className="w-full aspect-video object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" width={400} height={225} />
                   ) : (
                     <div className="w-full aspect-video bg-surface-low flex items-center justify-center">
-                      <span className="text-on-surface-variant text-xs">BBC Türkçe</span>
+                      <span className="text-on-surface-variant text-xs">{sourceLabel}</span>
                     </div>
                   )}
                 </div>
-                <span className="category-tag">DÜNYA</span>
+                <span className="category-tag">{title}</span>
                 <h3 className="font-bold text-lg leading-tight mt-1 mb-2 news-card-headline font-headline">{item.title}</h3>
                 <span className="text-xs text-on-surface-variant">{item.pubDate ? new Date(item.pubDate).toLocaleDateString("tr-TR") : ""}</span>
               </a>
@@ -133,12 +121,32 @@ const DunyaPage = () => {
   );
 };
 
+const DunyaPage = () => (
+  <RSSCategoryPage
+    feed="dunya"
+    title="DÜNYA"
+    description="Uluslararası gündem, küresel gelişmeler ve dış politika haberleri."
+    sourceLabel="BBC Türkçe"
+  />
+);
+
 const CategoryPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const [activeFilter, setActiveFilter] = useState("Tümü");
 
   if (slug === "dunya") {
     return <DunyaPage />;
+  }
+
+  if (slug === "savunma") {
+    return (
+      <RSSCategoryPage
+        feed="savunma"
+        title="SAVUNMA"
+        description="Milli savunma sanayii, TSK operasyonları ve güvenlik gelişmeleri."
+        sourceLabel="Mavi Savunma"
+      />
+    );
   }
 
   const category = categories[slug || "siyaset"];
