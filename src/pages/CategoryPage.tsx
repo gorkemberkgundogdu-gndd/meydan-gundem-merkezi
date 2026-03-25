@@ -10,7 +10,7 @@ import videoFinanceImg from "@/assets/video-finance.jpg";
 import videoStartupImg from "@/assets/video-startup.jpg";
 import videoAgricultureImg from "@/assets/video-agriculture.jpg";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useRSSFeed } from "@/hooks/useRSSFeed";
 
 const filters = ["Tümü", "Son Dakika", "Bugün", "Bu Hafta"];
@@ -51,6 +51,21 @@ const categories: Record<string, CategoryConfig> = {
 const RSSCategoryPage = ({ feed, title, description, sourceLabel }: { feed: string; title: string; description: string; sourceLabel: string }) => {
   const [activeFilter, setActiveFilter] = useState("Tümü");
   const { data: rssItems, isLoading, isError } = useRSSFeed(feed);
+  const navigate = useNavigate();
+
+  const handleItemClick = (item: NonNullable<typeof rssItems>[0]) => {
+    navigate(
+      `/haber/${encodeURIComponent(item.title.slice(0, 60).toLowerCase().replace(/\s+/g, "-"))}`,
+      {
+        state: {
+          ...item,
+          category: title,
+          feedKey: feed,
+          sourceLabel,
+        },
+      }
+    );
+  };
 
   return (
     <Layout>
@@ -99,7 +114,7 @@ const RSSCategoryPage = ({ feed, title, description, sourceLabel }: { feed: stri
         {!isLoading && !isError && rssItems && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {rssItems.map((item, i) => (
-              <a key={i} href={item.link} target="_blank" rel="noopener noreferrer" className="group news-card">
+              <button key={i} onClick={() => handleItemClick(item)} className="group news-card text-left">
                 <div className="overflow-hidden mb-3">
                   {item.image ? (
                     <img src={item.image} alt={item.title} className="w-full aspect-video object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" width={400} height={225} />
@@ -112,7 +127,7 @@ const RSSCategoryPage = ({ feed, title, description, sourceLabel }: { feed: stri
                 <span className="category-tag">{title}</span>
                 <h3 className="font-bold text-lg leading-tight mt-1 mb-2 news-card-headline font-headline">{item.title}</h3>
                 <span className="text-xs text-on-surface-variant">{item.pubDate ? new Date(item.pubDate).toLocaleDateString("tr-TR") : ""}</span>
-              </a>
+              </button>
             ))}
           </div>
         )}
