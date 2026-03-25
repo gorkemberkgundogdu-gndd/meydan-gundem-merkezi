@@ -6,6 +6,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import ArticlePage from "./pages/ArticlePage.tsx";
 import CategoryPage from "./pages/CategoryPage.tsx";
+import CerezPolitikasi from "./pages/CerezPolitikasi.tsx";
+import KVKKAydinlatma from "./pages/KVKKAydinlatma.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -19,6 +21,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/haber/:slug" element={<ArticlePage />} />
+          <Route path="/cerez-politikasi" element={<CerezPolitikasi />} />
+          <Route path="/kvkk-aydinlatma" element={<KVKKAydinlatma />} />
           <Route path="/:slug" element={<CategoryPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

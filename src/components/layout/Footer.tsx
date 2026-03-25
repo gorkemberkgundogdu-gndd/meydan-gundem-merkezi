@@ -30,8 +30,8 @@ const Footer = () => {
           <div className="pt-8 border-t border-primary-foreground/10 w-full flex flex-col md:flex-row justify-between items-center text-xs text-primary-foreground/50 gap-4">
             <p>© 2026 Meydan Medya A.Ş. Tüm hakları saklıdır.</p>
             <div className="flex space-x-4">
-              <a className="hover:text-primary-foreground" href="#">Çerez Politikası</a>
-              <a className="hover:text-primary-foreground" href="#">KVKK Aydınlatma Metni</a>
+              <Link className="hover:text-primary-foreground" to="/cerez-politikasi">Çerez Politikası</Link>
+              <Link className="hover:text-primary-foreground" to="/kvkk-aydinlatma">KVKK Aydınlatma Metni</Link>
             </div>
           </div>
         </div>
