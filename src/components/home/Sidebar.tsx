@@ -1,10 +1,26 @@
 import { useRSSFeed } from "@/hooks/useRSSFeed";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useNavigate } from "react-router-dom";
 import liveStudioImg from "@/assets/live-studio.jpg";
 
 const Sidebar = () => {
   const { data: items, isLoading } = useRSSFeed("sondakika");
   const topItems = items?.slice(0, 5) ?? [];
+  const navigate = useNavigate();
+
+  const handleClick = (item: NonNullable<typeof items>[0]) => {
+    navigate(
+      `/haber/${encodeURIComponent(item.title.slice(0, 60).toLowerCase().replace(/\s+/g, "-"))}`,
+      {
+        state: {
+          ...item,
+          category: "Son Dakika",
+          feedKey: "sondakika",
+          sourceLabel: "TRT Haber",
+        },
+      }
+    );
+  };
 
   return (
     <aside className="col-span-12 lg:col-span-4 space-y-8">
@@ -27,12 +43,10 @@ const Sidebar = () => {
             ))}
 
           {!isLoading && topItems.map((item, i) => (
-            <a
+            <button
               key={i}
-              href={item.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex gap-4 news-card group"
+              onClick={() => handleClick(item)}
+              className="flex gap-4 news-card group w-full text-left"
             >
               <span className="text-4xl font-extrabold text-outline-variant/40 group-hover:text-primary transition-colors italic leading-none font-headline shrink-0">
                 {String(i + 1).padStart(2, "0")}
@@ -40,7 +54,7 @@ const Sidebar = () => {
               <p className="text-sm font-bold leading-tight news-card-headline">
                 {item.title}
               </p>
-            </a>
+            </button>
           ))}
         </div>
       </div>
