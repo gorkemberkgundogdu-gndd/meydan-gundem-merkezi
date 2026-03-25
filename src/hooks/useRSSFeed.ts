@@ -9,6 +9,7 @@ export interface RSSItem {
 }
 
 const RSS_FEEDS: Record<string, string> = {
+  breaking: 'https://www.aa.com.tr/tr/rss/default?cat=guncel',
   gundem: 'https://www.aa.com.tr/tr/teyithatti/rss/news?cat=politika',
   sondakika: 'https://www.trthaber.com/sondakika.rss',
   ekonomi: 'https://www.bloomberght.com/rss',
