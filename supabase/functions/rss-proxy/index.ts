@@ -9,6 +9,7 @@ const RSS_FEEDS: Record<string, string> = {
   gundem: "https://www.aa.com.tr/tr/teyithatti/rss/news?cat=politika",
   sondakika: "https://www.trthaber.com/sondakika.rss",
   ekonomi: "https://www.bloomberght.com/rss",
+  dunya: "https://feeds.bbci.co.uk/turkce/rss.xml",
 };
 
 function parseRSSItems(xml: string): Array<{ title: string; link: string; pubDate: string; description: string; image: string }> {
@@ -20,7 +21,7 @@ function parseRSSItems(xml: string): Array<{ title: string; link: string; pubDat
     const itemXml = match[1];
 
     const getTag = (tag: string): string => {
-      const r = new RegExp(`<${tag}[^>]*><!\\[CDATA\\[([\\s\\S]*?)\\]\\]><\\/${tag}>|<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`);
+      const r = new RegExp(`<${tag}[^>]*><!\[CDATA\[([\s\S]*?)\]\]><\/${tag}>|<${tag}[^>]*>([\s\S]*?)<\/${tag}>`);
       const m = itemXml.match(r);
       return (m?.[1] || m?.[2] || "").trim();
     };
