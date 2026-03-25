@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import SEO from "@/components/SEO";
 import { Share2, Bookmark, ExternalLink } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRSSFeed } from "@/hooks/useRSSFeed";
@@ -33,6 +34,7 @@ const ArticlePage = () => {
   if (!article) {
     return (
       <Layout showBreaking={false}>
+        <SEO title="Haber Bulunamadı" description="Bu habere doğrudan erişilemiyor. Ana sayfadan bir habere tıklayarak ulaşabilirsiniz." />
         <div className="max-w-screen-md mx-auto px-4 py-20 text-center">
           <h1 className="text-2xl font-headline font-extrabold text-primary mb-4">
             Haber bulunamadı
@@ -78,6 +80,14 @@ const ArticlePage = () => {
 
   return (
     <Layout showBreaking={false}>
+      <SEO
+        title={article.title}
+        description={article.description || undefined}
+        ogType="article"
+        ogImage={article.image || undefined}
+        ogUrl={`/haber/${encodeURIComponent(article.title.slice(0, 60).toLowerCase().replace(/\s+/g, "-"))}`}
+        canonical={`/haber/${encodeURIComponent(article.title.slice(0, 60).toLowerCase().replace(/\s+/g, "-"))}`}
+      />
       <main className="max-w-screen-2xl mx-auto px-4 md:px-6 py-8 md:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
