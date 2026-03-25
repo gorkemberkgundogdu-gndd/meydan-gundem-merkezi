@@ -1,4 +1,4 @@
-import { Search, User, Menu, X } from 'lucide-react';
+import { Search, Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import meydanLogo from '@/assets/meydan-logo.png';
@@ -41,9 +41,6 @@ const Header = () => {
           <div className='flex items-center space-x-2 md:space-x-4'>
             <button className='p-2 hover:bg-muted transition-colors rounded-full'>
               <Search className='w-5 h-5' />
-            </button>
-            <button className='p-2 hover:bg-muted transition-colors rounded-full hidden md:block'>
-              <User className='w-5 h-5' />
             </button>
             <button className='lg:hidden p-2' onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
               {mobileMenuOpen ? <X className='w-6 h-6' /> : <Menu className='w-6 h-6' />}
