@@ -1,6 +1,7 @@
 import { Search, User, Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
+import meydanLogo from "@/assets/meydan-logo.png";
 
 const navItems = [
   { label: "Gündem", path: "/" },

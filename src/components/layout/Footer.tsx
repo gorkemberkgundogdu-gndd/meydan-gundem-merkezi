@@ -1,5 +1,6 @@
 import { Globe, MessageSquare, PlayCircle, Rss } from "lucide-react";
 import { Link } from "react-router-dom";
+import meydanLogo from "@/assets/meydan-logo.png";
 
 const Footer = () => {
   return (
