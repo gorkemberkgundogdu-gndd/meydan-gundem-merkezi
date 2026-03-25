@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 
 export interface RSSItem {
   title: string;
@@ -10,12 +9,6 @@ export interface RSSItem {
 }
 
 async function fetchRSSFeed(feed: string): Promise<RSSItem[]> {
-  const { data, error } = await supabase.functions.invoke("rss-proxy", {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  });
-
-  // Use direct fetch with query params since invoke doesn't support them
   const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/rss-proxy?feed=${feed}`;
   const res = await fetch(url, {
     headers: {
