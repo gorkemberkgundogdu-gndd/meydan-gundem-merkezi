@@ -1,4 +1,5 @@
 import Layout from "@/components/layout/Layout";
+import SEO from "@/components/SEO";
 import parliamentImg from "@/assets/parliament.jpg";
 import heroSummitImg from "@/assets/hero-summit.jpg";
 import economyImg from "@/assets/economy.jpg";
@@ -69,6 +70,12 @@ const RSSCategoryPage = ({ feed, title, description, sourceLabel }: { feed: stri
 
   return (
     <Layout>
+      <SEO
+        title={`${title} Haberleri`}
+        description={description}
+        ogUrl={`/${feed}`}
+        canonical={`/${feed}`}
+      />
       <div className="max-w-screen-2xl mx-auto px-4 md:px-6 py-6 lg:py-10">
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-4">
