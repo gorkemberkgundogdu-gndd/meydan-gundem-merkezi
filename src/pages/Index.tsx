@@ -2,6 +2,7 @@ import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
 import QuickAgenda from "@/components/home/QuickAgenda";
 import SiyasetSection from "@/components/home/SiyasetSection";
+import EkonomiWidget from "@/components/home/EkonomiWidget";
 import PerspektifSection from "@/components/home/PerspektifSection";
 import WritersSection from "@/components/home/WritersSection";
 import Sidebar from "@/components/home/Sidebar";
@@ -16,6 +17,7 @@ const Index = () => {
         <div className="grid grid-cols-12 gap-6 lg:gap-10">
           <div className="col-span-12 lg:col-span-8">
             <SiyasetSection />
+            <EkonomiWidget />
             <PerspektifSection />
             <WritersSection />
           </div>
