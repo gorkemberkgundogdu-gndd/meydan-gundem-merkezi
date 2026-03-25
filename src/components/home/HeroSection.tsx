@@ -1,11 +1,27 @@
 import { useRSSFeed } from "@/hooks/useRSSFeed";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
   const { data: items, isLoading } = useRSSFeed("hero");
+  const navigate = useNavigate();
 
   const main = items?.[0];
   const secondary = items?.slice(1, 4) ?? [];
+
+  const handleClick = (item: NonNullable<typeof items>[0]) => {
+    navigate(
+      `/haber/${encodeURIComponent(item.title.slice(0, 60).toLowerCase().replace(/\s+/g, "-"))}`,
+      {
+        state: {
+          ...item,
+          category: "Gündem",
+          feedKey: "hero",
+          sourceLabel: "Ensonhaber",
+        },
+      }
+    );
+  };
 
   if (isLoading) {
     return (
@@ -39,7 +55,7 @@ const HeroSection = () => {
     <div className="grid grid-cols-12 gap-6 lg:gap-8 mb-10 lg:mb-12">
       {/* Ana haber */}
       <div className="col-span-12 lg:col-span-8 news-card group">
-        <a href={main.link} target="_blank" rel="noopener noreferrer" className="block">
+        <button onClick={() => handleClick(main)} className="block w-full text-left">
           <div className="relative overflow-hidden aspect-[16/9] mb-4 lg:mb-6">
             {main.image ? (
               <img
@@ -68,18 +84,16 @@ const HeroSection = () => {
               {main.description}
             </p>
           )}
-        </a>
+        </button>
       </div>
 
       {/* Yan haberler */}
       <div className="col-span-12 lg:col-span-4 flex flex-col space-y-4 lg:space-y-6">
         {secondary.map((item, i) => (
-          <a
+          <button
             key={i}
-            href={item.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-surface-low p-4 lg:p-6 flex items-start gap-4 border-l-4 border-primary news-card group"
+            onClick={() => handleClick(item)}
+            className="bg-surface-low p-4 lg:p-6 flex items-start gap-4 border-l-4 border-primary news-card group text-left w-full"
           >
             <div className="flex-1">
               <span className="category-tag block mb-1">GÜNDEM</span>
@@ -97,7 +111,7 @@ const HeroSection = () => {
                 height={96}
               />
             )}
-          </a>
+          </button>
         ))}
       </div>
     </div>
