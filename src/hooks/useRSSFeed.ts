@@ -11,23 +11,18 @@ export interface RSSItem {
 
 async function fetchRSSFeed(feed: string): Promise<RSSItem[]> {
   const { data, error } = await supabase.functions.invoke("rss-proxy", {
-    body: undefined,
+    method: "GET",
     headers: { "Content-Type": "application/json" },
   });
 
-  // supabase.functions.invoke doesn't support query params easily, so we use fetch
-  const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;
-  const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-  
-  const res = await fetch(
-    `https://${projectId}.supabase.co/functions/v1/rss-proxy?feed=${feed}`,
-    {
-      headers: {
-        Authorization: `Bearer ${anonKey}`,
-        apikey: anonKey,
-      },
-    }
-  );
+  // Use direct fetch with query params since invoke doesn't support them
+  const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/rss-proxy?feed=${feed}`;
+  const res = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+      apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+    },
+  });
 
   if (!res.ok) throw new Error("RSS fetch failed");
   const json = await res.json();
@@ -39,7 +34,7 @@ export function useRSSFeed(feed: string, enabled = true) {
     queryKey: ["rss", feed],
     queryFn: () => fetchRSSFeed(feed),
     enabled,
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 5 * 60 * 1000,
     refetchInterval: 5 * 60 * 1000,
     retry: 2,
   });
