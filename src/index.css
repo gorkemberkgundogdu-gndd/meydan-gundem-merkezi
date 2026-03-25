@@ -88,7 +88,7 @@
     @apply text-secondary-container font-extrabold text-[10px] tracking-widest uppercase;
   }
   .news-card {
-    @apply group cursor-pointer;
+    @apply cursor-pointer;
   }
   .news-card-headline {
     @apply font-bold leading-tight group-hover:text-primary transition-colors;
