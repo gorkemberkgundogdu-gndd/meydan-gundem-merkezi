@@ -12,12 +12,18 @@ const RSS_FEEDS: Record<string, string> = {
   breaking: 'https://www.aa.com.tr/tr/rss/default?cat=guncel',
   gundem: 'https://www.aa.com.tr/tr/teyithatti/rss/news?cat=politika',
   sondakika: 'https://www.trthaber.com/sondakika.rss',
-  ekonomi: 'https://www.bloomberght.com/rss',
+  ekonomi: 'https://www.ntv.com.tr/ekonomi.rss',
   dunya: 'https://feeds.bbci.co.uk/turkce/rss.xml',
   savunma: 'https://mavisavunma.com/feed/',
   siyaset: 'https://www.ahaber.com.tr/rss/gundem.xml',
   hero: 'https://www.ensonhaber.com/rss/ensonhaber.xml',
 };
+
+function extractImageFromHtml(html: string): string {
+  if (!html) return '';
+  const match = html.match(/<img[^>]+src=["']([^"']+)["']/i);
+  return match ? match[1] : '';
+}
 
 async function fetchRSSFeed(feedKey: string): Promise<RSSItem[]> {
   const feedUrl = RSS_FEEDS[feedKey];
@@ -34,7 +40,12 @@ async function fetchRSSFeed(feedKey: string): Promise<RSSItem[]> {
     link: (item.link as string) || '',
     pubDate: (item.pubDate as string) || '',
     description: ((item.description as string) || '').replace(/<[^>]*>/g, '').substring(0, 200),
-    image: (item.thumbnail as string) || ((item.enclosure as Record<string, string>)?.link) || '',
+    image:
+      (item.thumbnail as string) ||
+      ((item.enclosure as Record<string, string>)?.link) ||
+      extractImageFromHtml((item.content as string) || '') ||
+      extractImageFromHtml((item.description as string) || '') ||
+      '',
   }));
 }
 
