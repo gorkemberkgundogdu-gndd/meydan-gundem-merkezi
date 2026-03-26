@@ -14,7 +14,7 @@ const RSS_FEEDS: Record<string, string> = {
   sondakika: 'https://www.trthaber.com/sondakika.rss',
   ekonomi: 'https://www.ntv.com.tr/ekonomi.rss',
   dunya: 'https://feeds.bbci.co.uk/turkce/rss.xml',
-  savunma: 'https://mavisavunma.com/feed/',
+  savunma: 'https://www.savunmasanayist.com/feed/',
   siyaset: 'https://www.ahaber.com.tr/rss/gundem.xml',
   hero: 'https://www.ensonhaber.com/rss/ensonhaber.xml',
 };
