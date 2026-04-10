@@ -1,6 +1,6 @@
-import { CITIES } from '../../src/lib/weather/constants';
-import { fetchCityWeather } from '../../src/lib/weather/fetchWeather';
-import { getCached, setCached, getFallback } from '../../src/lib/weather/cache';
+import { CITIES } from '../../src/lib/weather/constants.js';
+import { fetchCityWeather } from '../../src/lib/weather/fetchWeather.js';
+import { getCached, setCached, getFallback } from '../../src/lib/weather/cache.js';
 
 export default async function handler(req: any, res: any) {
   if (req.method !== 'GET') {
