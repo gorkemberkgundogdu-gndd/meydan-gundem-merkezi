@@ -1,4 +1,4 @@
-import type { City } from '../../types/weather';
+import type { City } from '../../types/weather.js';
 
 // 3 sabit şehir — geocoding kullanılmıyor
 export const CITIES: City[] = [
